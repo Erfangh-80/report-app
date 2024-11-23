@@ -10,7 +10,7 @@ exports.createReport = async (req, res) => {
     const report = new Report({
       title,
       description,
-      categoryId,
+      category: categoryId,
       images,
     });
 
