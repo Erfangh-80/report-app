@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CategoryCard from "../components/CategoryCard";
+import axios from "axios";
+const API_BASE_URL = "http://localhost:3000/api";
 
 const Home = () => {
   const categories = [
@@ -7,6 +9,15 @@ const Home = () => {
     { id: 2, name: "دسته ۲", description: "توضیح کوتاه دسته ۲", link: "/category/2" },
     { id: 3, name: "دسته ۳", description: "توضیح کوتاه دسته ۳", link: "/category/3" },
   ];
+  const [data, setData] = useState([])
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await axios.get(API_BASE_URL+"/categories")
+      console.log(data);
+      setData(data.data)
+    }
+    fetchData()
+  },[])
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -17,7 +28,7 @@ const Home = () => {
       <main className="max-w-7xl mx-auto py-6 px-4">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">دسته‌بندی‌ها</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories?.map((category) => (
+          {data?.map((category) => (
             <CategoryCard
               key={category.id}
               name={category.name}
