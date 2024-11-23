@@ -7,10 +7,12 @@ const path = require("path");
 const dotenv = require("dotenv");
 const fs = require("fs"); // افزودن ماژول fs
 const { dirname } = require("path"); // افزودن ماژول path
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
 
 // مسیر پوشه برای ذخیره تصاویر
 const uploadDir = path.join(__dirname, "uploads/images");
