@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CategoryCard = ({ name, description, link }) => {
+const CategoryCard = ({ name, description, id }) => {
   return (
     <div className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between">
       <div className="flex items-center space-x-4">
@@ -27,7 +27,7 @@ const CategoryCard = ({ name, description, link }) => {
         </div>
       </div>
       <Link
-        to={link}
+        to={`/category/${id}`}
         className="text-blue-500 hover:text-blue-700 font-medium text-sm"
       >
         مشاهده
