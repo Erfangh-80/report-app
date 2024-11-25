@@ -1,29 +1,61 @@
 import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+import axios from "axios";
 
+const API_BASE_URL = "http://localhost:3000/api";
 const CreateReportPage = () => {
   const [title, setTitle] = useState("");
   const [reportType, setReportType] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
 
+  // Mutation برای ارسال داده‌ها به سمت سرور
+  const mutation = useMutation(
+    async (formData) => {
+      const response = await axios.post(`${API_BASE_URL}/reports`, formData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        toast.success("گزارش با موفقیت ذخیره شد!");
+        // ریست فرم پس از ذخیره موفقیت‌آمیز
+        setTitle("");
+        setReportType("");
+        setDescription("");
+        setImages([]);
+      },
+      onError: () => {
+        toast.error("خطا در ذخیره گزارش. لطفاً دوباره تلاش کنید.");
+      },
+    }
+  );
+
+  // آپلود تصاویر
   const handleImageUpload = (e) => {
-    const uploadedImages = Array.from(e.target.files).map((file) =>
-      URL.createObjectURL(file)
-    );
+    const uploadedImages = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...uploadedImages]);
   };
 
+  // ارسال فرم
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ title, reportType, description, images });
-    setTitle("");
-    setReportType("");
-    setDescription("");
-    setImages([]);
+
+    // آماده‌سازی داده‌ها برای ارسال
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("reportType", reportType);
+    formData.append("description", description);
+    images.forEach((image, index) => formData.append(`images[${index}]`, image));
+    console.log(formData);
+    
+    mutation.mutate(formData); // ارسال درخواست
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl lg:max-w-4xl"
@@ -91,7 +123,7 @@ const CreateReportPage = () => {
             {images.map((image, index) => (
               <div key={index} className="relative">
                 <img
-                  src={image}
+                  src={URL.createObjectURL(image)}
                   alt={`Uploaded Preview ${index + 1}`}
                   className="w-full h-40 object-cover rounded-lg shadow-md"
                 />
@@ -102,9 +134,12 @@ const CreateReportPage = () => {
         {/* دکمه ذخیره */}
         <button
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg"
+          disabled={mutation.isLoading}
+          className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg ${
+            mutation.isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          ذخیره گزارش
+          {mutation.isLoading ? "در حال ذخیره..." : "ذخیره گزارش"}
         </button>
       </form>
     </div>
