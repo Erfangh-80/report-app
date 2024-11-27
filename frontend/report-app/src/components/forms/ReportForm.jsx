@@ -13,9 +13,7 @@ const CreateReportPage = () => {
   // Mutation برای ارسال داده‌ها به سمت سرور
   const mutation = useMutation(
     async (formData) => {
-      const response = await axios.post(`${API_BASE_URL}/reports`, formData, {
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await axios.post(`${API_BASE_URL}/reports`, formData);
       return response.data;
     },
     {
@@ -48,7 +46,7 @@ const CreateReportPage = () => {
     formData.append("title", title);
     formData.append("reportType", reportType);
     formData.append("description", description);
-    images.forEach((image, index) => formData.append(`images[${index}]`, image));
+    images.forEach((image) => formData.append("images", image))
     console.log(formData);
     
     mutation.mutate(formData); // ارسال درخواست

@@ -4,11 +4,6 @@ import axios from "axios";
 const API_BASE_URL = "http://localhost:3000/api";
 
 const Home = () => {
-  const categories = [
-    { id: 1, name: "دسته ۱", description: "توضیح کوتاه دسته ۱", link: "/category/1" },
-    { id: 2, name: "دسته ۲", description: "توضیح کوتاه دسته ۲", link: "/category/2" },
-    { id: 3, name: "دسته ۳", description: "توضیح کوتاه دسته ۳", link: "/category/3" },
-  ];
   const [data, setData] = useState([])
   useEffect(() => {
     const fetchData = async () => {
@@ -30,10 +25,10 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {data?.map((category) => (
             <CategoryCard
-              key={category.id}
+              key={category._id}
               name={category.name}
               description={category.description}
-              link={category.link}
+              id={category._id}
             />
           ))}
         </div>
