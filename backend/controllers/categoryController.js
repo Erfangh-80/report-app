@@ -3,14 +3,10 @@ const Category = require('../models/Category');
 
 // ایجاد دسته‌بندی جدید
 exports.createCategory = async (req, res) => {
-  console.log("1:", {body:req.body});
-  const name = req.body.categoryName; 
-  console.log("2:", {name, description:req.body.description});
   const data = {
-    name,
+    name: req.body.categoryName,
     description: req.body.description
   }
-  console.log("3", data);
   
   try {
     const category = new Category(data);
