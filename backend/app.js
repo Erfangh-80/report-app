@@ -24,8 +24,7 @@ if (!fs.existsSync(uploadDir)) {
 
 // Middleware
 app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes
 app.use("/api/categories", categoryRoutes);
 app.use("/api/reports", reportRoutes);
