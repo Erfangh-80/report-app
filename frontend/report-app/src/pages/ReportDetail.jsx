@@ -1,21 +1,28 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { fetchReportDetails } from "../services/api";
 
 const ReportDetail = () => {
   const { id } = useParams();
-  const report = {
-    title: `گزارش ${id}`,
-    description: "توضیحات کامل گزارش اینجاست.",
-    images: ["https://via.placeholder.com/600x400", "https://via.placeholder.com/600x400"],
-  };
+  const { data } = useQuery({
+    queryKey: ["reportDetail"],
+    queryFn: () => fetchReportDetails(id),
+  });
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-2xl font-semibold text-center mb-6">{report.title}</h1>
-      <p className="text-gray-600 text-center mb-6">{report.description}</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {report.images.map((image, index) => (
-          <img key={index} src={image} alt={`گزارش ${id} - تصویر ${index + 1}`} className="w-full rounded-lg shadow-md" />
+      <h1 className="text-2xl font-semibold text-center mb-6">{data.title}</h1>
+      <p className="text-gray-600 text-center mb-6">{data.description}</p>
+      <div className="flex justify-center flex-wrap gap-4">
+        {data?.images?.map((image, index) => (
+          <img
+            key={index}
+            src={`http://localhost:3000/${image}`}
+            alt={`گزارش ${id} - تصویر ${index + 1}`}
+            className="w-3/6 rounded-lg shadow-md"
+          />
         ))}
       </div>
     </div>

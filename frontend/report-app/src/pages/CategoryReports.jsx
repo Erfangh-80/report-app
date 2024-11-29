@@ -1,23 +1,30 @@
 import React from "react";
 import ReportCard from "../components/ReportCard";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { fetchReportsByCategory } from "../services/api";
+
 
 const ReportsListPage = () => {
-  const reports = [
-    { id: 1, title: "گزارش ۱", imageUrl: "https://via.placeholder.com/300" },
-    { id: 2, title: "گزارش ۲", imageUrl: "https://via.placeholder.com/300" },
-  ];
+  const params = useParams();
+
+  const {data} = useQuery({
+    queryKey:["reportsByCategory"],
+    queryFn: () => fetchReportsByCategory(params.id)
+  })
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
         گزارش‌ها
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {reports.map((report) => (
+      <div className="flex flex-nowrap gap-6">
+        {data?.map((report) => (
           <ReportCard
-            key={report.id}
+            key={report._id}
             title={report.title}
-            imageUrl={report.imageUrl}
+            imageUrl={report.images[0]}
+            id={report._id}
           />
         ))}
       </div>
