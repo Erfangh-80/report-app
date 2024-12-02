@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { BeatLoader } from "react-spinners";
+import Select from "react-select";
 
 const API_BASE_URL = "http://localhost:3000/api";
-const CreateReportPage = () => {
+
+const CreateReportPage = ({ reportTypes }) => {
   const [title, setTitle] = useState("");
-  const [reportType, setReportType] = useState("");
+  const [reportType, setReportType] = useState(null); // تغییر به `null` برای سازگاری با React Select
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
 
@@ -21,7 +24,7 @@ const CreateReportPage = () => {
         toast.success("گزارش با موفقیت ذخیره شد!");
         // ریست فرم پس از ذخیره موفقیت‌آمیز
         setTitle("");
-        setReportType("");
+        setReportType(null);
         setDescription("");
         setImages([]);
       },
@@ -41,16 +44,21 @@ const CreateReportPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!reportType) {
+      toast.error("لطفاً نوع گزارش را انتخاب کنید.");
+      return;
+    }
+    
     // آماده‌سازی داده‌ها برای ارسال
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("reportType", reportType);
+    formData.append("reportType", reportType.value); // استفاده از مقدار انتخاب‌شده
     formData.append("description", description);
-    images.forEach((image) => formData.append("images", image))
-    console.log(formData);
+    images.forEach((image) => formData.append("images", image));
     
     mutation.mutate(formData); // ارسال درخواست
   };
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
@@ -62,7 +70,6 @@ const CreateReportPage = () => {
           ایجاد گزارش جدید
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* عنوان گزارش */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               عنوان گزارش
@@ -81,13 +88,12 @@ const CreateReportPage = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               نوع گزارش
             </label>
-            <input
-              type="text"
-              value={reportType}
-              onChange={(e) => setReportType(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="نوع گزارش را وارد کنید"
-              required
+            <Select
+              options={reportTypes} // داده‌های ورودی از پراپ
+              value={reportType} // مقدار انتخاب‌شده
+              onChange={setReportType} // به‌روزرسانی انتخاب
+              placeholder="نوع گزارش را انتخاب کنید"
+              isClearable
             />
           </div>
         </div>
@@ -130,15 +136,19 @@ const CreateReportPage = () => {
           </div>
         </div>
         {/* دکمه ذخیره */}
-        <button
-          type="submit"
-          disabled={mutation.isLoading}
-          className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg ${
-            mutation.isLoading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          {mutation.isLoading ? "در حال ذخیره..." : "ذخیره گزارش"}
-        </button>
+        {mutation.isLoading ? (
+          <BeatLoader color="#2291aadb" />
+        ) : (
+          <button
+            type="submit"
+            disabled={mutation.isLoading}
+            className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg ${
+              mutation.isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            ذخیره گزارش
+          </button>
+        )}
       </form>
     </div>
   );

@@ -13,8 +13,8 @@ const ReportDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-2xl font-semibold text-center mb-6">{data.title}</h1>
-      <p className="text-gray-600 text-center mb-6">{data.description}</p>
+      <h1 className="text-2xl font-semibold text-center mb-6">{data?.title}</h1>
+      <p className="text-gray-600 text-center mb-6">{data?.description}</p>
       <div className="flex justify-center flex-wrap gap-4">
         {data?.images?.map((image, index) => (
           <img

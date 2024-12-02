@@ -2,25 +2,27 @@ import React, { useEffect } from "react";
 import ReportForm from "../components/forms/ReportForm";
 import { useState } from "react";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCategories } from "../services/api";
 
 const CreateReportPage = () => {
   const [options,setOptions] = useState([])
-  useEffect(() => {
-    const fetchApi = async () => {
-    //   const response = await axios.get(
-    //     API_BASE_URL + "/reports/category/" + params.id
-    //   );
-    //   setData(response.data);
-        //  const response = await axios.get(`${API_BASE_URL}/categories`)
-        //  console.log(response.data);
-        //  setOptions(response.data)
-         
-    };
-    fetchApi();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+    onSuccess: (data) => {
+      // تبدیل داده‌ها به فرمت مورد نیاز React Select
+      const formattedOptions = data.map((item) => ({
+        value: item._id, // مقدار ID به‌عنوان `value`
+        label: item.name, // نام دسته به‌عنوان `label`
+      }));
+      setOptions(formattedOptions);
+    },
+  });
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <ReportForm />
+      <ReportForm reportTypes={options}/>
     </div>
   );
 };
