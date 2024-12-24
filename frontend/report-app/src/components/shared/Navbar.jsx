@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="bg-blue-500 p-4 shadow-md">
+    <nav className="bg-blue-500 p-4 shadow-2xl">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link to="/" className="text-white text-xl font-bold">
           مدیریت گزارش‌ها
