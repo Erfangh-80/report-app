@@ -21,7 +21,7 @@ const CreateReportPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <div className="min-h-screen w-full bg-[url('./assets/images/_MG_8439.JPG')] bg-fixed bg-center bg-cover bg-gray-100 flex items-center justify-center p-6">
       <ReportForm reportTypes={options}/>
     </div>
   );

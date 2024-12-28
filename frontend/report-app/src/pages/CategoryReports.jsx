@@ -14,8 +14,8 @@ const ReportsListPage = () => {
   })
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
+    <div className="min-h-screen bg-gray-100 p-6 bg-[url('./assets/images/_MG_8439.JPG')] bg-center bg-cover">
+      <h1 className="text-3xl font-bold mb-6 text-center text-white">
         گزارش‌ها
       </h1>
       <div className="flex flex-nowrap gap-6">

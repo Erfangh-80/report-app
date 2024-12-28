@@ -61,7 +61,7 @@ const CreateReportPage = ({ reportTypes }) => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+    <div className="min-h-screen flex items-center justify-center p-6">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl lg:max-w-4xl"
@@ -105,7 +105,7 @@ const CreateReportPage = ({ reportTypes }) => {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="resize-none w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
             placeholder="توضیحات گزارش را وارد کنید"
             rows={5}
             required

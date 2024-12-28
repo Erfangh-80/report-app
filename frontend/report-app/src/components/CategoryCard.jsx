@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const CategoryCard = ({ name, description, id }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between">
-      <div className="flex items-center space-x-4">
+    <div className="bg-white/30 backdrop-blur-lg shadow-md rounded-lg p-4 flex items-center justify-between">
+      <div className="flex items-center space-x-4 gap-3">
         <div className="bg-blue-100 text-blue-500 p-3 rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@ const CategoryCard = ({ name, description, id }) => {
           </svg>
         </div>
         <div>
-          <h3 className="text-lg font-semibold">{name}</h3>
+          <h3 className="text-lg text-gray-100 font-semibold">{name}</h3>
           <p className="text-sm text-gray-500">{description}</p>
         </div>
       </div>

@@ -70,3 +70,13 @@ button:focus-visible {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+* {
+  font-family: vazir-matn;
+}
+
+@font-face {
+  font-family: vazir-matn;
+  src: url("./assets//fonts/Vazirmatn-Regular.ttf");
+}

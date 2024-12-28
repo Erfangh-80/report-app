@@ -8,6 +8,8 @@ import CreateReportPage from "../pages/CreateReportPage";
 import Navbar from "../components/shared/Navbar";
 
 const AppRouter = () => {
+  console.log(1);
+  
   return (
     <Router>
       <Navbar />

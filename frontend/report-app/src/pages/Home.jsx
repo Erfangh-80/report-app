@@ -14,9 +14,9 @@ import "swiper/css/pagination";
 // Import required modules
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 
-import Image1 from "../assets/image1.jpg";
-import Image2 from "../assets/image2.jpg";
-import Image3 from "../assets/image3.jpg";
+import Image1 from "../assets/images/2023-06-25.jpg";
+import Image2 from "../assets/images/image2.jpg";
+import Image3 from "../assets/images/p_0009.jpg";
 
 const Home = () => {
   const { data, isLoading } = useQuery({
@@ -65,13 +65,19 @@ const Home = () => {
           />
         </SwiperSlide>
       </Swiper>
+      <div className="flex justify-center items-center p-10 bg-blue-600 h-16 text-lg">
+        <div className="flex p-4 w-fit text-center items-center bg-blue-900 rounded-full">
+          <span className="text-white text-xl">حضرت امام خامنه ای (ره): </span>
+          <p className="text-white text-sm ml-2">دانشجو و مجموعه‌های دانشجویی به یک تفکر زیربنایی محکم احتیاج دارند. این نیاز قطعی آنهاست.</p>
+        </div>
+      </div>
 
       {/* محتوای بعد از اسلایدر */}
-      <main className="max-w-7xl mx-auto py-6 px-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6 mt-12">
+      <main className="bg-[url('./assets/images/_MG_8439.JPG')] bg-center bg-cover min-h-screen w-full mx-auto py-6 px-4">
+        <h2 className="text-2xl text-center font-semibold text-white mb-6 mt-12">
           دسته‌بندی‌ها
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {data?.map((category) => (
             <CategoryCard
               key={category._id}
